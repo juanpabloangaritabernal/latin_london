@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latin London — Timeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EFE9DB; --paper2:#E6DFCE; --ink:#2B2B2B;
+  --mag:#EE3FC8; --blu:#3350E2; --yel:#E8A81C; --grn:#6FD64B;
+  --rosa:#F5AFDD; --cart:#C9A97A; --rojo:#D9382B; --cel:#CDE2DE;
+  --mono:'Space Mono',ui-monospace,monospace;
+  --disp:'Baloo 2','Space Mono',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{
+  font-family:var(--mono);color:var(--ink);background:var(--paper);
+  line-height:1.45;font-size:15px;
+}
+a{color:var(--blu)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+
+/* ============ HEADER ============ */
+header{padding:34px 0 10px;position:relative;overflow:hidden}
+.h-title{font-family:var(--disp);font-weight:800;color:var(--mag);
+  font-size:clamp(44px,9vw,96px);line-height:.95;letter-spacing:.01em;text-align:center;margin-bottom:6px}
+.h-rule{height:3px;background:var(--mag);max-width:760px;margin:10px auto 14px}
+.h-sub{max-width:760px;margin:0 auto;text-align:center;font-weight:700;letter-spacing:.04em;font-size:13px}
+.h-sub .en{color:var(--ink)} .h-sub .es{color:var(--mag)} .h-sub .pt{color:var(--blu)}
+.langbar{display:flex;gap:10px;justify-content:center;margin:18px 0 6px}
+.langbtn{font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:.08em;
+  border:3px solid var(--ink);background:var(--paper);padding:7px 16px;cursor:pointer;
+  box-shadow:4px 4px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.langbtn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.langbtn:focus-visible{outline:3px dashed var(--rojo);outline-offset:2px}
+.langbtn[data-l="en"].on{background:var(--ink);color:var(--paper)}
+.langbtn[data-l="es"].on{background:var(--mag);color:var(--paper);border-color:var(--mag);box-shadow:4px 4px 0 var(--ink)}
+.langbtn[data-l="pt"].on{background:var(--blu);color:var(--paper);border-color:var(--blu);box-shadow:4px 4px 0 var(--ink)}
+
+/* ============ INTRO / COVERS ============ */
+.intro{max-width:820px;margin:14px auto 6px;padding:18px 18px 16px;background:rgba(255,255,255,.45);
+  border:2px solid var(--ink);box-shadow:6px 6px 0 rgba(43,43,43,.85)}
+.intro h2{font-family:var(--disp);font-size:26px;color:var(--mag);letter-spacing:.06em;margin-bottom:8px}
+.intro p{font-weight:700;font-size:13px;white-space:pre-line}
+.covers{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:20px auto 6px;max-width:820px}
+.cover{flex:1 1 240px;max-width:380px;cursor:pointer;border:3px solid var(--ink);background:#fff;
+  box-shadow:6px 6px 0 var(--ink);padding:8px;text-align:center;transition:transform .1s}
+.cover:hover{transform:rotate(-.6deg) translate(-2px,-2px)}
+.cover img{width:100%;display:block}
+.cover figcaption{font-weight:700;font-size:12px;letter-spacing:.1em;padding-top:8px;color:var(--mag)}
+.cover.wc figcaption{color:var(--blu)}
+
+/* ============ CONTROLS ============ */
+.controls{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:3px solid var(--mag);
+  padding:10px 0 12px;margin-top:22px}
+.crow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin-top:8px}
+.chip{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  border:2px solid var(--ink);background:var(--paper);padding:5px 11px;cursor:pointer;
+  box-shadow:3px 3px 0 var(--ink)}
+.chip:focus-visible{outline:3px dashed var(--rojo);outline-offset:2px}
+.chip.on{background:var(--mag);border-color:var(--mag);color:#fff}
+.chip.on.c-blu{background:var(--blu);border-color:var(--blu)}
+.chip.on.c-yel{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+.chip.on.c-grn{background:var(--grn);border-color:var(--grn);color:var(--ink)}
+.searchrow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+#q{font-family:var(--mono);font-weight:700;font-size:14px;padding:8px 12px;width:min(340px,72vw);
+  border:3px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink)}
+#q:focus-visible{outline:3px dashed var(--mag);outline-offset:2px}
+.iconbtn{font-family:var(--mono);font-weight:700;font-size:13px;border:3px solid var(--ink);
+  background:var(--yel);padding:8px 12px;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}
+.iconbtn.alt{background:var(--cel)}
+.count{font-size:12px;font-weight:700;text-align:center;margin-top:8px;color:var(--ink);opacity:.75}
+
+/* ============ TIMELINE ============ */
+main{padding:26px 0 40px}
+.timeline{position:relative;max-width:860px;margin:0 auto;padding-left:26px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:3px;background:var(--mag)}
+.item{position:relative;margin:0 0 46px}
+.item::before{content:'';position:absolute;left:-26px;top:14px;width:15px;height:15px;border-radius:50%;
+  background:var(--paper);border:4px solid var(--mag)}
+.year{font-family:var(--disp);font-weight:800;color:var(--mag);font-size:clamp(40px,7vw,64px);
+  line-height:.9;position:relative;display:inline-block}
+.year::after{content:'';display:block;height:3px;background:var(--mag);margin-top:2px}
+.badge{display:inline-block;vertical-align:middle;margin-left:10px;font-size:10px;font-weight:700;
+  letter-spacing:.14em;border:2px solid var(--ink);padding:2px 7px;background:var(--cel)}
+.badge.mus{background:var(--rosa)}
+.star{position:absolute;top:-10px;right:-4px;color:var(--rojo);font-size:22px;transform:rotate(12deg)}
+.card{position:relative;margin-top:12px;background:rgba(255,255,255,.55);border:2px solid var(--ink);
+  box-shadow:6px 6px 0 rgba(43,43,43,.9);padding:14px 14px 16px;border-left:8px solid var(--acc,var(--mag))}
+.imgwrap{margin:2px 0 12px}
+.imgwrap img{display:block;width:100%;height:auto;border:3px solid var(--ink);background:#fff}
+.ph{display:flex;align-items:center;justify-content:center;height:150px;border:3px dashed var(--ink);
+  background:var(--paper2);font-family:var(--disp);font-weight:800;font-size:30px;color:var(--ink)}
+.card h3{font-family:var(--disp);font-size:21px;line-height:1.1;margin-bottom:6px}
+.t-text{font-weight:700;font-size:13.5px;white-space:pre-line}
+body[data-lang="en"] .t-text{color:var(--ink)}
+body[data-lang="es"] .t-text{color:var(--mag)}
+body[data-lang="pt"] .t-text{color:var(--blu)}
+.meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  border:2px solid var(--ink);padding:2px 7px;background:var(--paper)}
+.tag.cat-cultural{background:var(--rosa)} .tag.cat-social{background:var(--yel)} .tag.cat-politica{background:var(--cel)}
+.credit{font-size:10.5px;color:var(--blu);font-weight:700;margin-top:8px}
+.more{margin-top:12px;font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.08em;
+  border:3px solid var(--ink);background:var(--mag);color:#fff;padding:7px 14px;cursor:pointer;
+  box-shadow:4px 4px 0 var(--ink)}
+.more:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.more:focus-visible{outline:3px dashed var(--rojo);outline-offset:2px}
+.linkbtn{display:inline-block;margin-top:12px;margin-left:8px;font-weight:700;font-size:12px;letter-spacing:.08em;
+  border:3px solid var(--ink);background:var(--yel);color:var(--ink);padding:7px 14px;text-decoration:none;
+  box-shadow:4px 4px 0 var(--ink)}
+
+/* ============ GRID VIEW ============ */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px;max-width:1040px;margin:0 auto}
+.gcard{border:3px solid var(--ink);background:#fff;box-shadow:5px 5px 0 var(--ink);cursor:pointer;
+  padding:7px;position:relative;transition:transform .1s}
+.gcard:hover{transform:rotate(-.8deg) translate(-2px,-2px)}
+.gcard img{width:100%;display:block}
+.gyear{font-family:var(--disp);font-weight:800;color:var(--mag);font-size:26px;line-height:1;padding:6px 2px 0}
+.gtitle{font-size:11.5px;font-weight:700;padding:2px 2px 4px}
+
+/* ============ MODAL (póster trilingüe) ============ */
+.overlay{position:fixed;inset:0;background:rgba(43,43,43,.66);display:none;z-index:100;
+  align-items:flex-start;justify-content:center;overflow-y:auto;padding:28px 12px}
+.overlay.open{display:flex}
+.panel{background:var(--paper);border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);
+  max-width:860px;width:100%;padding:22px 20px 26px;position:relative}
+.close{position:absolute;top:10px;right:10px;font-family:var(--mono);font-weight:700;font-size:16px;
+  border:3px solid var(--ink);background:var(--rojo);color:#fff;width:38px;height:38px;cursor:pointer;
+  box-shadow:3px 3px 0 var(--ink)}
+.close:focus-visible{outline:3px dashed var(--yel);outline-offset:2px}
+.m-year{font-family:var(--disp);font-weight:800;color:var(--mag);font-size:clamp(46px,9vw,80px);line-height:.9}
+.m-rule{height:3px;background:var(--mag);margin:6px 0 14px}
+.m-title{font-family:var(--disp);font-size:24px;margin-bottom:10px}
+.m-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:14px}
+@media(max-width:640px){.m-cols{grid-template-columns:1fr}}
+.m-col{font-weight:700;font-size:13px;white-space:pre-line}
+.m-col.en{color:var(--ink)} .m-col.es{color:var(--mag)} .m-col.pt{color:var(--blu)}
+.m-extra{margin-top:16px;border:2px dashed var(--ink);padding:12px;background:rgba(245,175,221,.28);
+  font-weight:700;font-size:12.5px}
+.m-meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+
+/* ============ ADMIN ============ */
+.admin .panel{max-width:760px}
+.admin h2{font-family:var(--disp);color:var(--mag);font-size:28px;margin-bottom:8px}
+.admin p,.admin li{font-size:13px;font-weight:700;margin-bottom:6px}
+.admin ol{padding-left:20px;margin-bottom:10px}
+.admin code{background:#fff;border:1px solid var(--ink);padding:1px 5px;font-size:12px;word-break:break-all}
+.abtn{font-family:var(--mono);font-weight:700;font-size:13px;border:3px solid var(--ink);padding:8px 14px;
+  cursor:pointer;box-shadow:4px 4px 0 var(--ink);margin:4px 6px 4px 0}
+.abtn.b1{background:var(--yel)} .abtn.b2{background:var(--grn)} .abtn.b3{background:var(--cel)}
+#xls{margin:8px 0;font-family:var(--mono);font-size:12px;max-width:100%}
+.errbox{border:3px solid var(--rojo);background:#fff;color:var(--rojo);padding:10px;font-size:12px;
+  font-weight:700;margin:10px 0;max-height:180px;overflow:auto;white-space:pre-line}
+.okbox{border:3px solid var(--grn);background:#fff;padding:10px;font-size:12px;font-weight:700;margin:10px 0}
+.prev{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px;background:#fff}
+.prev th,.prev td{border:1px solid var(--ink);padding:3px 6px;text-align:left;font-weight:700}
+.prev th{background:var(--rosa)}
+.prevwrap{overflow-x:auto;max-height:220px;overflow-y:auto;border:2px solid var(--ink)}
+
+/* ============ FOOTER ============ */
+footer{border-top:3px solid var(--mag);padding:30px 0 46px;margin-top:20px}
+footer h2{font-family:var(--disp);color:var(--mag);font-size:26px;letter-spacing:.06em;margin-bottom:10px}
+footer h3{font-family:var(--mono);color:var(--mag);font-size:15px;letter-spacing:.1em;margin:16px 0 4px}
+footer p,footer li{font-size:12.5px;font-weight:700;margin-bottom:4px}
+.orgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:10px}
+.org{border:2px solid var(--mag);padding:12px;background:rgba(255,255,255,.4)}
+.org b{color:var(--mag);letter-spacing:.06em}
+.smallnote{font-size:11px;opacity:.7;margin-top:18px}
+@media(max-width:560px){
+  .timeline{padding-left:20px}
+  .item::before{left:-20px;width:11px;height:11px;border-width:3px}
+  body{font-size:14px}
+}
+</style>
+</head>
+<body data-lang="es">
+
+<header>
+  <div class="wrap">
+    <h1 class="h-title" id="ransom">LATIN LONDON</h1>
+    <div class="h-rule"></div>
+    <p class="h-sub">
+      <span class="en">LATIN AMERICANS IN LONDON: AN INTERACTIVE TIMELINE</span><br>
+      <span class="es">LATINOAMERICANOS EN LONDRES: UNA L&Iacute;NEA DE TIEMPO INTERACTIVA</span><br>
+      <span class="pt">LATINO-AMERICANOS EM LONDRES: UMA LINHA DO TEMPO INTERATIVA</span>
+    </p>
+    <div class="langbar" role="group" aria-label="Idioma / Language / Idioma">
+      <button class="langbtn" data-l="en">EN</button>
+      <button class="langbtn on" data-l="es">ES</button>
+      <button class="langbtn" data-l="pt">PT</button>
+    </div>
+    <section class="intro">
+      <h2>InTrO</h2>
+      <p id="introText"></p>
+    </section>
+    <div class="covers">
+      <figure class="cover mus" id="coverMus" tabindex="0" role="button" aria-label="Ver línea musical">
+        <img id="coverMusImg" alt="Portada: Latin London, a musical timeline">
+        <figcaption>&#9835; L&Iacute;NEA MUSICAL / MUSICAL TIMELINE</figcaption>
+      </figure>
+      <figure class="cover wc" id="coverWc" tabindex="0" role="button" aria-label="Ver línea Wards Corner">
+        <img id="coverWcImg" alt="Portada: Latin London desde Wards Corner">
+        <figcaption>&#9873; WARDS CORNER: LA LUCHA POR PERMANECER</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="wrap">
+    <div class="searchrow">
+      <input id="q" type="search" placeholder="Buscar / Search / Buscar&hellip;" aria-label="Buscar">
+      <button class="iconbtn" id="viewBtn" aria-pressed="false">&#9638; GRID</button>
+      <button class="iconbtn alt" id="adminBtn">&#9881; ADMIN</button>
+    </div>
+    <div class="crow" id="seriesRow" role="group" aria-label="Serie"></div>
+    <div class="crow" id="catRow" role="group" aria-label="Categoría"></div>
+    <div class="crow" id="decRow" role="group" aria-label="Década"></div>
+    <p class="count" id="count"></p>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="timeline" id="tl"></div>
+  <div class="grid" id="grid" style="display:none"></div>
+</main>
+
+<div class="overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="panel">
+    <button class="close" id="mClose" aria-label="Cerrar">&#10005;</button>
+    <div id="mBody"></div>
+  </div>
+</div>
+
+<div class="overlay admin" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="aTitle">
+  <div class="panel">
+    <button class="close" id="aClose" aria-label="Cerrar">&#10005;</button>
+    <h2 id="aTitle">Administrador</h2>
+    <p>Actualiza la l&iacute;nea de tiempo cargando un Excel. Flujo recomendado:</p>
+    <ol>
+      <li>Descarga la plantilla con los datos actuales.</li>
+      <li>Edita o agrega filas en Excel (una fila = un evento).</li>
+      <li>Carga el archivo: el sistema valida, previsualiza y aplica.</li>
+      <li>Exporta el JSON y p&iacute;dele a Claude que lo integre al HTML para hacerlo permanente.</li>
+    </ol>
+    <p>Columnas obligatorias: <code>id, series, date_label, sort_date, category, title_en, title_es, title_pt, text_en, text_es, text_pt, image</code></p>
+    <p>Im&aacute;genes: sube los JPG a la ra&iacute;z de tu repositorio y usa solo el nombre del archivo (ej. <code>A3_TimeMusic-04.jpg</code>), o pega una URL completa; las URLs de GitHub tipo <code>blob</code> se convierten autom&aacute;ticamente en directas.</p>
+    <div>
+      <button class="abtn b1" id="tplBtn">&#8681; Descargar plantilla Excel</button>
+      <button class="abtn b3" id="jsonBtn">&#8681; Exportar JSON</button>
+    </div>
+    <input type="file" id="xls" accept=".xlsx,.xls" aria-label="Cargar Excel">
+    <div id="aResult"></div>
+    <button class="abtn b2" id="applyBtn" style="display:none">&#10003; Aplicar a la l&iacute;nea de tiempo</button>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <h2>Este archivo sigue abierto</h2>
+    <p id="openText" class="t-text"></p>
+    <p style="margin-top:8px"><a href="https://wardscorner.org" target="_blank" rel="noopener">wardscorner.org</a> &middot; IG @wards_corner &middot; hello@wardscorner.org &middot; <a href="https://wardscorner.org/join" target="_blank" rel="noopener">wardscorner.org/join</a></p>
+
+    <h3>TIMELINE CREW</h3>
+    <p>RESEARCH: Juan Pablo Angarita Bernal and Ver&oacute;nica Posada &Aacute;lvarez</p>
+    <p>EXHIBITION DESIGN: Tatiana Vera Espinosa and Maria Catalina Venegas Raba</p>
+    <p>GRAPHIC DESIGN: Juliana Ortiz Morales, Tatiana Vera Espinosa and Ver&oacute;nica Posada &Aacute;lvarez</p>
+    <p>PRODUCTION: Maria Jos&eacute; Gonzales and Vicky &Aacute;lvarez</p>
+    <p>THANKS TO Julio Etchard and Patria Rom&aacute;n Vel&aacute;zquez for sharing photographs.</p>
+    <p>THANKS TO ALL THE TRADERS FROM THE SEVEN SISTERS MARKET.</p>
+    <p>Supported by The British Academy and University of Derby.</p>
+
+    <h3>ORGANIZACIONES ALIADAS / ALLIED ORGANISATIONS</h3>
+    <div class="orgs">
+      <div class="org"><b>LATIN ELEPHANT</b><br>Supports small business owners from migrant and racialised backgrounds in Elephant &amp; Castle and across London. Campaigned for the recognition of E&amp;C as London&rsquo;s BARRIO LATINO.<br>Contact: beca@latinelephant.org</div>
+      <div class="org"><b>HARINGEY COMMUNITY ACTION NETWORK (HCAN)</b><br>Brings together over 30 local groups, trade unions and individuals challenging oppression and inequality.<br>Contact: haringey.we.can@gmail.com</div>
+      <div class="org"><b>HARINGEY SOLIDARITY GROUP</b><br>Local people who believe things only get better when ordinary people collectively decide what is best for themselves.<br>Contact: tony@haringeytony.org.uk</div>
+      <div class="org"><b>TOTTENHAM FAMILY FIGHTBACK</b><br>Parents and childcare workers who occupied and reopened their community centre and nursery threatened with demolition.<br>Contact: mirandahall42@gmail.com</div>
+    </div>
+    <p class="smallnote">In loving memory of Mirca Morera (1977&ndash;2026).</p>
+    <p class="smallnote">Fotos: Julio Etchart y archivo comunitario. Sitio construido a partir de la exposici&oacute;n Latin London.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+/* ================= CONFIG ================= */
+// Las imágenes están en la raíz del repositorio (rama main). Nota: la URL github.com/.../blob/...
+// es la página que muestra la imagen; la URL directa del archivo es la de raw.githubusercontent.com.
+// imgURL() convierte automáticamente URLs blob en raw si se pegan en el Excel.
+const IMG_BASE = 'https://raw.githubusercontent.com/juanpabloangaritabernal/latin_london/main/';
+// TODO: reemplazar cuando tengas las URLs reales de los QR:
+const URL_PLAYLIST = ''; // QR "Playlist Latin London Music" (portada musical)
+const URL_MERCADO_LATINO = ''; // QR de la canción MERCADO LATINO (lámina 2026)
+
+const COVER_MUS = 'A3_TimeMusic-02.jpg';
+const COVER_WC  = 'OUTLINES_A2_TimeLineHistory-01.jpg';
+
+const STATIC = {
+  intro:{
+    en:"The following historical and photographic archive is a small excerpt from the long history of struggle, resistance, and collective organizing of the Latin American community in London.\n\nWe also acknowledge the unconditional support received throughout the various campaigns, as well as the lessons and experiences shared with other migrant communities, diasporas, and local communities in London. We deeply thank all the individuals, organisations, academics, leaders, and community leaders who, through their commitment and solidarity, made each of these achievements possible.",
+    es:"El siguiente archivo histórico y fotográfico es un pequeño extracto de la larga historia de lucha, resistencia y construcción colectiva de la comunidad latinoamericana en Londres.\n\nReconocemos también el apoyo incondicional recibido a lo largo de las distintas campañas, así como los aprendizajes compartidos con otras comunidades migrantes, diásporas y con las comunidades locales de Londres. Agradecemos profundamente a todas las personas, organizaciones, académicos, líderes y lideresas que, con su compromiso y solidaridad, hicieron posible cada uno de estos logros.",
+    pt:"O seguinte arquivo histórico e fotográfico é um pequeno excerto da longa história de luta, resistência e construção coletiva da comunidade latino-americana em Londres.\n\nReconhecemos também o apoio incondicional recebido ao longo das diferentes campanhas, bem como os aprendizados partilhados com outras comunidades migrantes, diásporas e comunidades locais de Londres. Agradecemos profundamente a todas as pessoas, organizações, acadêmicos, líderes e lideranças que, com o seu compromisso e solidariedade, tornaram possível cada uma destas conquistas."
+  },
+  open:{
+    en:"This archive is open. We want it to continue growing in the digital space, incorporating new stories, photographs, memories, and voices that continue to tell the past, present, and future of our community. A more complete version of this archive can be accessed at wardscorner.org.",
+    es:"Este archivo sigue abierto. Queremos que continúe creciendo en el espacio digital, incorporando nuevas historias, fotografías, recuerdos y voces que sigan contando el pasado, el presente y el futuro de nuestra comunidad. Una versión más completa de este archivo puede consultarse en wardscorner.org.",
+    pt:"Este arquivo continua aberto. Queremos que ele continue a crescer no espaço digital, incorporando novas histórias, fotografias, memórias e vozes que continuem a contar o passado, o presente e o futuro da nossa comunidade. Uma versão mais completa deste arquivo pode ser consultada em wardscorner.org."
+  },
+  ui:{
+    more:{en:'READ MORE',es:'VER MÁS',pt:'VER MAIS'},
+    all:{en:'ALL',es:'TODAS',pt:'TODAS'},
+    results:{en:'events',es:'eventos',pt:'eventos'},
+    series:{all:{en:'BOTH TIMELINES',es:'AMBAS LÍNEAS',pt:'AMBAS AS LINHAS'},
+            music:{en:'MUSIC',es:'MÚSICA',pt:'MÚSICA'},
+            wards:{en:'WARDS CORNER',es:'WARDS CORNER',pt:'WARDS CORNER'}},
+    cats:{cultural:{en:'CULTURAL',es:'CULTURAL',pt:'CULTURAL'},
+          social:{en:'SOCIAL',es:'SOCIAL',pt:'SOCIAL'},
+          politica:{en:'POLITICAL',es:'POLÍTICA',pt:'POLÍTICA'}}
+  }
+};
+
+/* ================= EVENTOS =================
+   series: 'music' | 'wards' — cat: cultural/social/politica (una o varias) */
+const EVENTS = [
+/* ---------- LÍNEA MUSICAL ---------- */
+{id:'m01',series:'music',date_label:'1966',sort_date:'1966-01-01',cat:['cultural'],accent:'#F5AFDD',
+ img:'A3_TimeMusic-03.jpg',alt:'Collage: Stan Getz y Astrud Gilberto con hibiscos y la portada de The Girl from Ipanema',
+ credit:'Photo: Stan Getz and Astrud Gilberto',loc:'New Victoria Theatre',tags:['Brasil','bossa nova','jazz'],
+ title:{en:'Stan Getz & Astrud Gilberto in London',es:'Stan Getz y Astrud Gilberto en Londres',pt:'Stan Getz e Astrud Gilberto em Londres'},
+ text:{en:'Stan Getz and Astrud Gilberto play the New Victoria Theatre in London.',
+       es:'Stan Getz y Astrud Gilberto se presentan en el New Victoria Theatre de Londres.',
+       pt:'Stan Getz e Astrud Gilberto se apresentam no New Victoria Theatre, em Londres.'}},
+{id:'m02',series:'music',date_label:'1969',sort_date:'1969-01-01',cat:['cultural','politica'],accent:'#E8A81C',featured:true,
+ img:'A3_TimeMusic-04.jpg',alt:'Collage: Caetano Veloso y Gilberto Gil jóvenes frente a la National Gallery, casete y radiograbadora',
+ credit:'Photo: Gilberto Gil, author: Joi Ito',loc:'Londres',tags:['Brasil','tropicália','exilio','MPB'],
+ title:{en:'Caetano Veloso and Gilberto Gil in exile',es:'Caetano Veloso y Gilberto Gil en el exilio',pt:'Caetano Veloso e Gilberto Gil no exílio'},
+ text:{en:'Caetano Veloso and Gilberto Gil, Brazilian musicians, live their exile in London.',
+       es:'Caetano Veloso y Gilberto Gil, músicos brasileños, viven su exilio en Londres.',
+       pt:'Caetano Veloso e Gilberto Gil, músicos brasileiros, vivem o exílio em Londres.'}},
+{id:'m03',series:'music',date_label:'1970',sort_date:'1970-01-01',cat:['cultural'],accent:'#6FD64B',
+ img:'A3_TimeMusic-05.jpg',alt:'Collage: Sérgio Mendes con bandera de Brasil, Big Ben y portada de Brasil 66',
+ credit:'Photo: Sergio Mendes, author: Rob Mieremet / Anefo',loc:'Royal Festival Hall',tags:['Brasil','bossa nova','concierto'],
+ title:{en:'Sérgio Mendes & Brasil \u201966 at the Royal Festival Hall',es:'Sérgio Mendes & Brasil \u201966 en el Royal Festival Hall',pt:'Sérgio Mendes & Brasil \u201966 no Royal Festival Hall'},
+ text:{en:'Sérgio Mendes & Brasil \u201966 play at the Royal Festival Hall.',
+       es:'Sérgio Mendes & Brasil \u201966 actúan en el Royal Festival Hall.',
+       pt:'Sérgio Mendes & Brasil \u201966 se apresentam no Royal Festival Hall.'}},
+{id:'m04',series:'music',date_label:'1977',sort_date:'1977-01-01',cat:['cultural','politica'],accent:'#CDE2DE',
+ img:'A3_TimeMusic-06.jpg',alt:'Collage: Mercedes Sosa tocando el bombo junto al Royal Albert Hall en azul',
+ credit:'Photo: Mercedes Sosa, author: Kroon, Wikimedia Commons',loc:'Royal Albert Hall',tags:['Argentina','nueva canción','derechos humanos'],
+ title:{en:'Mercedes Sosa at Voices of Freedom',es:'Mercedes Sosa en Voices of Freedom',pt:'Mercedes Sosa no Voices of Freedom'},
+ text:{en:'Mercedes Sosa takes part in Voices of Freedom at the Royal Albert Hall.',
+       es:'Mercedes Sosa participa en Voices of Freedom en el Royal Albert Hall.',
+       pt:'Mercedes Sosa participa em Voices of Freedom no Royal Albert Hall.'}},
+{id:'m05',series:'music',date_label:'1980',sort_date:'1980-06-01',cat:['cultural'],accent:'#EE3FC8',
+ img:'A3_TimeMusic-07.jpg',alt:'Collage: Roberto Pla en los timbales con parejas de baile en rosa y azul',
+ credit:'Photo: Roberto Pla, author: Latino Life',loc:'Londres',tags:['Colombia','salsa','percusión'],
+ title:{en:'Roberto Pla arrives in London',es:'Roberto Pla llega a Londres',pt:'Roberto Pla chega a Londres'},
+ text:{en:'Roberto Pla, a Colombian percussionist, arrives in London and strengthens the salsa scene.',
+       es:'Roberto Pla, percusionista colombiano, llega a Londres y fortalece la escena de la salsa.',
+       pt:'Roberto Pla, percussionista colombiano, chega a Londres e fortalece a cena da salsa.'}},
+{id:'m06',series:'music',date_label:'1986',sort_date:'1986-01-01',cat:['cultural'],accent:'#D9382B',featured:true,
+ img:'A3_TimeMusic-08.jpg',alt:'Collage: Celia Cruz con vestido rosa, bandera cubana y letrero The Queen of Salsa',
+ credit:'Photo: Celia Cruz, author: Lionel Decoster',loc:'Hammersmith Odeon',tags:['Cuba','salsa','Fania'],
+ title:{en:'Celia Cruz at the Hammersmith Odeon',es:'Celia Cruz en el Hammersmith Odeon',pt:'Celia Cruz no Hammersmith Odeon'},
+ text:{en:'Celia Cruz performs at the Hammersmith Odeon.',
+       es:'Celia Cruz se presenta en el Hammersmith Odeon.',
+       pt:'Celia Cruz se apresenta no Hammersmith Odeon.'}},
+{id:'m07',series:'music',date_label:'1988',sort_date:'1988-01-01',cat:['cultural','politica'],accent:'#3350E2',related:['m08'],
+ img:'A3_TimeMusic-09.jpg',alt:'Collage: polaroid de Inti-Illimani en concierto, vinilo Venceremos y sello Solidarität mit Chile',
+ credit:'Photo: Inti-Illimani, author: Razi Sol',loc:'Barbican Hall',tags:['Chile','nueva canción','solidaridad'],
+ title:{en:'Inti-Illimani, John Williams and Paco Peña at the Barbican',es:'Inti-Illimani, John Williams y Paco Peña en el Barbican',pt:'Inti-Illimani, John Williams e Paco Peña no Barbican'},
+ text:{en:'Inti-Illimani, John Williams and Paco Peña perform at the Barbican Hall.',
+       es:'Inti-Illimani, John Williams y Paco Peña actúan en el Barbican Hall.',
+       pt:'Inti-Illimani, John Williams e Paco Peña se apresentam no Barbican Hall.'}},
+{id:'m08',series:'music',date_label:'1989',sort_date:'1989-01-01',cat:['cultural'],accent:'#E8A81C',related:['m07'],
+ img:'A3_TimeMusic-09.jpg',alt:'Collage compartido 1988-1989 con vinilo y polaroid de concierto',
+ credit:'Photo: Inti-Illimani, author: Razi Sol',loc:'Empire Leicester Square',tags:['Colombia','salsa'],
+ title:{en:'Joe Arroyo and La Verdad at the Empire',es:'Joe Arroyo y La Verdad en el Empire',pt:'Joe Arroyo e La Verdad no Empire'},
+ text:{en:'Joe Arroyo and La Verdad play the Empire Leicester Square.',
+       es:'Joe Arroyo y La Verdad se presentan en el Empire Leicester Square.',
+       pt:'Joe Arroyo e La Verdad se apresentam no Empire Leicester Square.'}},
+{id:'m09',series:'music',date_label:'1991',sort_date:'1991-01-01',cat:['cultural','social'],accent:'#F5AFDD',
+ img:'A3_TimeMusic-10.jpg',alt:'Collage: pareja bailando en magenta, still del documental Salsa Fever y claqueta',
+ credit:'Photo: Salsa Fever, author: Patricia Diaz',loc:'Londres',tags:['Colombia','cine','identidad'],
+ title:{en:'Patricia Díaz directs Salsa Fever',es:'Patricia Díaz dirige Salsa Fever',pt:'Patricia Díaz dirige Salsa Fever'},
+ text:{en:'Patricia Díaz, a Colombian filmmaker, directs Salsa Fever, on music, dance and Latino identity.',
+       es:'Patricia Díaz, cineasta colombiana, dirige Salsa Fever, sobre música, baile e identidad latina.',
+       pt:'Patricia Díaz, cineasta colombiana, dirige Salsa Fever, sobre música, dança e identidade latina.'}},
+{id:'m10',series:'music',date_label:'2000',sort_date:'2000-06-01',cat:['cultural'],accent:'#D9382B',
+ img:'A3_TimeMusic-11.jpg',alt:'Collage: Omara Portuondo entre flores y mapa ilustrado de Cuba',
+ credit:'Photo: Omara Portuondo, Buena Vista Social Club singer, author: Julio Etchart',loc:'Royal Albert Hall',tags:['Cuba','son'],
+ title:{en:'Buena Vista Social Club at the Royal Albert Hall',es:'Buena Vista Social Club en el Royal Albert Hall',pt:'Buena Vista Social Club no Royal Albert Hall'},
+ text:{en:'Ibrahim Ferrer and Rubén González bring Buena Vista Social Club to the Royal Albert Hall.',
+       es:'Ibrahim Ferrer y Rubén González llevan Buena Vista Social Club al Royal Albert Hall.',
+       pt:'Ibrahim Ferrer e Rubén González levam o Buena Vista Social Club ao Royal Albert Hall.'}},
+{id:'m11',series:'music',date_label:'2001',sort_date:'2001-01-01',cat:['cultural'],accent:'#6FD64B',
+ img:'A3_TimeMusic-12.jpg',alt:'Collage: escarabajo ilustrado y mosaico de afiches del festival La Linea',
+ credit:'',loc:'Londres',tags:['festival','música latina'],
+ title:{en:'La Linea, The London Latin Music Festival, is born',es:'Nace La Linea, The London Latin Music Festival',pt:'Nasce o La Linea, The London Latin Music Festival'},
+ text:{en:'La Linea, The London Latin Music Festival, is created.',
+       es:'Nace La Linea, The London Latin Music Festival.',
+       pt:'Nasce o La Linea, The London Latin Music Festival.'}},
+{id:'m12',series:'music',date_label:'2013',sort_date:'2013-01-01',cat:['cultural','social'],accent:'#EE3FC8',
+ img:'A3_TimeMusic-13.jpg',alt:'Collage: la banda Wara, sello Indefinite Leave to Remain y mapa rosa de Latinoamérica',
+ credit:'Wara, Leave to Remain video',loc:'Londres',tags:['migración','banda','Punto Latino'],
+ title:{en:'Wara releases Leave to Remain',es:'Wara lanza Leave to Remain',pt:'Wara lança Leave to Remain'},
+ text:{en:'Wara, a London-based alternative Latin band, releases Leave to Remain.',
+       es:'Wara, banda londinense de música latina alternativa, lanza Leave to Remain.',
+       pt:'O Wara, banda londrina de música latina alternativa, lança Leave to Remain.'}},
+{id:'m13',series:'music',date_label:'2016',sort_date:'2016-06-01',cat:['cultural','social'],accent:'#E8A81C',
+ img:'A3_TimeMusic-14.jpg',alt:'Collage: afiche de LatinoLife in the Park con hibisco y tucán',
+ credit:'',loc:'Walpole Park',tags:['festival','comunidad'],url:'https://www.latinolifeinthepark.com',
+ urlLabel:{en:'Visit the festival',es:'Visitar el festival',pt:'Visitar o festival'},
+ title:{en:'LatinoLife in the Park is launched',es:'Nace LatinoLife in the Park',pt:'Nasce o LatinoLife in the Park'},
+ text:{en:'LatinoLife in the Park is launched, the UK\u2019s biggest Latin festival.',
+       es:'Nace LatinoLife in the Park, el festival latino más grande del Reino Unido.',
+       pt:'Nasce o LatinoLife in the Park, o maior festival latino do Reino Unido.'}},
+{id:'m14',series:'music',date_label:'2019',sort_date:'2019-06-01',cat:['cultural','social'],accent:'#EE3FC8',
+ img:'A3_TimeMusic-15.jpg',alt:'Collage: banner fucsia de FLAWA, puño en alto y recorte Votes for Women',
+ credit:'',loc:'Londres',tags:['mujeres','artes','festival'],
+ title:{en:'FLAWA is created',es:'Nace FLAWA',pt:'Nasce o FLAWA'},
+ text:{en:'FLAWA, the Festival of Latin American Women in the Arts, is created.',
+       es:'Nace FLAWA, Festival of Latin American Women in the Arts.',
+       pt:'Nasce o FLAWA, Festival of Latin American Women in the Arts.'}},
+{id:'m15',series:'music',date_label:'2024',sort_date:'2024-06-01',cat:['cultural'],accent:'#F5AFDD',related:['m16'],
+ img:'A3_TimeMusic-16.jpg',alt:'Collage: Karol G en azul y J Balvin en magenta con arcoíris y flor de Takashi Murakami',
+ credit:'Photo: J Balvin, author: Kevin Mazur',loc:'O2 Arena',tags:['Colombia','urbano'],
+ title:{en:'Karol G plays the O2 Arena',es:'Karol G en el O2 Arena',pt:'Karol G na O2 Arena'},
+ text:{en:'Karol G plays London\u2019s O2 Arena, with the Mañana Será Bonito tour.',
+       es:'Karol G se presenta en el O2 Arena de Londres, con la gira Mañana Será Bonito.',
+       pt:'Karol G apresenta-se na O2 Arena de Londres com a digressão Mañana Será Bonito.'}},
+{id:'m16',series:'music',date_label:'2024',sort_date:'2024-06-02',cat:['cultural'],accent:'#3350E2',related:['m15'],
+ img:'A3_TimeMusic-16.jpg',alt:'Collage compartido 2024 con Karol G y J Balvin',
+ credit:'Photo: J Balvin, author: Kevin Mazur',loc:'O2 Arena',tags:['Colombia','urbano'],
+ title:{en:'J Balvin headlines the O2 Arena',es:'J Balvin encabeza el O2 Arena',pt:'J Balvin encabeça a O2 Arena'},
+ text:{en:'J Balvin headlines London\u2019s O2 Arena with the Que Bueno Volver a Verte tour.',
+       es:'J Balvin encabeza el O2 Arena con la gira Que Bueno Volver a Verte.',
+       pt:'J Balvin encabeça a O2 Arena de Londres com a turnê Que Bueno Volver a Verte.'}},
+{id:'m17',series:'music',date_label:'2025',sort_date:'2025-06-01',cat:['cultural','social'],accent:'#D9382B',
+ img:'A3_TimeMusic-17.jpg',alt:'Collage: fiestas de Movimientos con banner y figura de carnaval',
+ credit:'',loc:'Londres',tags:['colectivo','comunidad','20 años'],
+ title:{en:'Movimientos ORG celebrates 20 years',es:'Movimientos ORG celebra 20 años',pt:'Movimientos ORG celebra 20 anos'},
+ text:{en:'Movimientos ORG celebrates 20 years in 2025, two decades promoting Latin American music, culture, and artists in the UK through events, collaborations, and community-focused programming with lasting cultural impact.',
+       es:'Movimientos ORG celebra 20 años en 2025, dos décadas promoviendo la música y cultura latinoamericana en el Reino Unido con eventos vibrantes, artistas innovadores y un fuerte enfoque comunitario y cultural.',
+       pt:'Movimientos ORG celebra 20 anos em 2025, duas décadas promovendo música e cultura latino-americana no Reino Unido através de eventos vibrantes, artistas inovadores e forte compromisso comunitário e cultural.'}},
+{id:'m18',series:'music',date_label:'2026',sort_date:'2026-06-01',cat:['cultural'],accent:'#E8A81C',related:['m19'],
+ img:'A3_TimeMusic-18.jpg',alt:'Collage 2026 con fondo de ondas multicolor, Mercado Latino y Seven Sisters Market',
+ credit:'',loc:'Tottenham Hotspur Stadium',tags:['Puerto Rico','gira'],
+ title:{en:'Bad Bunny at Tottenham Hotspur Stadium',es:'Bad Bunny en el Tottenham Hotspur Stadium',pt:'Bad Bunny no Tottenham Hotspur Stadium'},
+ text:{en:'Bad Bunny, the Puerto Rican artist, brings his DeBÍ TiRAR MáS FOToS tour to Tottenham Hotspur Stadium.',
+       es:'Bad Bunny, artista puertorriqueño, lleva su gira DeBÍ TiRAR MáS FOToS al Tottenham Hotspur Stadium.',
+       pt:'Bad Bunny, artista porto-riquenho, leva sua turnê DeBÍ TiRAR MáS FOToS ao Tottenham Hotspur Stadium.'}},
+{id:'m19',series:'music',date_label:'2026',sort_date:'2026-06-02',cat:['cultural','social','politica'],accent:'#EE3FC8',related:['m18'],featured:true,
+ img:'A3_TimeMusic-18.jpg',alt:'Collage compartido 2026 con QR de la canción Mercado Latino',
+ credit:'',loc:'Seven Sisters',tags:['Wards Corner','canción','comunidad'],url:URL_MERCADO_LATINO,
+ urlLabel:{en:'Listen to the song',es:'Escuchar la canción',pt:'Ouvir a música'},
+ title:{en:'Wards Corner CBS launches MERCADO LATINO',es:'Wards Corner CBS lanza MERCADO LATINO',pt:'Wards Corner CBS apresenta MERCADO LATINO'},
+ text:{en:'Wards Corner CBS launches the song MERCADO LATINO.',
+       es:'Wards Corner CBS lanza la canción MERCADO LATINO.',
+       pt:'Wards Corner CBS apresenta MERCADO LATINO.'}},
+
+/* ---------- LÍNEA WARDS CORNER ---------- */
+{id:'w01',series:'wards',date_label:'1970\u20131979',sort_date:'1970-01-02',cat:['politica','social'],accent:'#3350E2',featured:true,
+ img:'OUTLINES_A2_TimeLineHistory-02.jpg',alt:'Collage: hemisferios de mapa antiguo, mujer con pañuelo sobre maletas y siluetas de migrantes',
+ credit:'Photo: Julio Etchart',loc:'Londres',tags:['exilio','dictaduras','refugio'],
+ title:{en:'South American exiles arrive in London',es:'Llegan exiliados sudamericanos a Londres',pt:'Exilados sul-americanos chegam a Londres'},
+ text:{en:'South American exiles arrive in London, fleeing dictatorship and repression.',
+       es:'Exiliados sudamericanos llegan a Londres huyendo de dictaduras y represión.',
+       pt:'Exilados sul-americanos chegam a Londres fugindo de ditaduras e repressão.'}},
+{id:'w02',series:'wards',date_label:'1980',sort_date:'1980-01-01',cat:['social'],accent:'#F5AFDD',
+ img:'OUTLINES_A2_TimeLineHistory-03.jpg',alt:'Lámina lila 1980-1989: Latin American House, Wards Store y marcha Woman Migrant and Proud',
+ credit:'Photo: Julio Etchart, Chile',loc:'Kilburn',tags:['casa comunitaria'],
+ title:{en:'Latin American House opens in Kilburn',es:'Abre la Latin American House en Kilburn',pt:'Abre a Latin American House em Kilburn'},
+ text:{en:'Latin American House opens in Kilburn as a community home.',
+       es:'Latin American House abre en Kilburn como casa comunitaria.',
+       pt:'A Latin American House abre em Kilburn como casa comunitária.'}},
+{id:'w03',series:'wards',date_label:'1985',sort_date:'1985-01-01',cat:['social'],accent:'#C9A97A',
+ img:'OUTLINES_A2_TimeLineHistory-03.jpg',alt:'Lámina lila 1980-1989 con el edificio del antiguo Wards Department Store',
+ credit:'',loc:'Seven Sisters',tags:['Wards Corner','mercado'],
+ title:{en:'Wards Department Store becomes an independent market',es:'El antiguo Wards Department Store se vuelve mercado independiente',pt:'A antiga Wards Department Store vira mercado independente'},
+ text:{en:'The old Wards Department Store starts running as an independent market.',
+       es:'El antiguo Wards Department Store empieza a funcionar como mercado independiente.',
+       pt:'A antiga Wards Department Store passa a funcionar como mercado independente.'}},
+{id:'w04',series:'wards',date_label:'1989',sort_date:'1989-01-02',cat:['social','politica'],accent:'#EE3FC8',
+ img:'OUTLINES_A2_TimeLineHistory-03.jpg',alt:'Lámina lila 1980-1989 con marcha de mujeres migrantes',
+ credit:'',loc:'Londres',tags:['Carila','LAWRS','LAWA','organizaciones'],
+ title:{en:'Latin American community organisations take shape',es:'Nacen las organizaciones comunitarias latinoamericanas',pt:'Surgem as organizações comunitárias latino-americanas'},
+ text:{en:'Latin American community organisations take shape: Carila (Latin American Welfare Group), Latin American Women\u2019s Rights Service (LAWRS) and Latin American Women\u2019s Aid (LAWA).',
+       es:'Nacen organizaciones comunitarias latinoamericanas: Carila (Latin American Welfare Group), Latin American Women\u2019s Rights Service (LAWRS) y Latin American Women\u2019s Aid (LAWA).',
+       pt:'Surgem organizações comunitárias latino-americanas: Carila (Latin American Welfare Group), Latin American Women\u2019s Rights Service (LAWRS) e Latin American Women\u2019s Aid (LAWA).'}},
+{id:'w05',series:'wards',date_label:'1990',sort_date:'1990-01-01',cat:['social','cultural'],accent:'#E8A81C',
+ img:'OUTLINES_A2_TimeLineHistory-04.jpg',alt:'Collage 1990-2000: Seven Sisters Indoor Market, El Barco Latino, arepas y el tren de la Victoria Line',
+ credit:'Photos: Clapham 1990s / El Barco Latino, Patria Román Velázquez',loc:'Elephant & Castle · Seven Sisters',tags:['comercio','servicios latinos'],
+ title:{en:'Elephant & Castle and Seven Sisters become Latino hubs',es:'Elephant & Castle y Seven Sisters se vuelven lugares latinos',pt:'Elephant & Castle e Seven Sisters tornam-se lugares latinos'},
+ text:{en:'ELEPHANT AND CASTLE and SEVEN SISTERS become places to meet, trade and find Latino services.',
+       es:'ELEPHANT AND CASTLE y SEVEN SISTERS se vuelven lugares de encuentro, comercio y servicios latinos.',
+       pt:'ELEPHANT AND CASTLE e SEVEN SISTERS tornam-se lugares de encontro, comércio e serviços latinos.'}},
+{id:'w06',series:'wards',date_label:'2000',sort_date:'2000-01-01',cat:['cultural'],accent:'#6FD64B',
+ img:'OUTLINES_A2_TimeLineHistory-04.jpg',alt:'Collage 1990-2000 con Patria Román-Velázquez y la portada de The Making of Latin London',
+ credit:'',loc:'Londres',tags:['academia','Latin London','tesis'],
+ title:{en:'Patria Román-Velázquez coins the term Latin London',es:'Patria Román-Velázquez acuña el término Latin London',pt:'Patria Román-Velázquez cunha o termo Latin London'},
+ text:{en:'Patria Román-Velázquez (Puerto Rican scholar) finishes her doctoral thesis on The making of Latin London: Salsa music, place and identity, coining the term Latin London.',
+       es:'Patria Román-Velázquez (académica puertorriqueña) termina su tesis doctoral sobre la creación de la Latin London: Salsa music, place and identity, acuñando el término Latin London.',
+       pt:'Patria Román-Velázquez (acadêmica porto-riquenha) conclui sua tese de doutorado sobre a formação da Latin London: Salsa music, place and identity, cunhando o termo Latin London.'}},
+{id:'w07',series:'wards',date_label:'2000',sort_date:'2000-01-02',cat:['social'],accent:'#F5AFDD',
+ img:'OUTLINES_A2_TimeLineHistory-05.jpg',alt:'Collage 2000-2007: fachadas del Seven Sisters Market, Pueblito Paisa Café y marchas',
+ credit:'',loc:'Seven Sisters Market',tags:['Latinxs','encuentro'],
+ title:{en:'Seven Sisters Market, a meeting point for Latinxs',es:'Seven Sisters Market, punto de encuentro para Latinxs',pt:'Seven Sisters Market, ponto de encontro para Latinxs'},
+ text:{en:'SEVEN SISTERS MARKET becomes a meeting point for Latinxs in London.',
+       es:'SEVEN SISTERS MARKET se convierte en punto de encuentro para Latinxs en Londres.',
+       pt:'O SEVEN SISTERS MARKET se torna ponto de encontro para Latinxs em Londres.'}},
+{id:'w08',series:'wards',date_label:'2007',sort_date:'2007-01-01',cat:['social','politica'],accent:'#EE3FC8',featured:true,
+ img:'OUTLINES_A2_TimeLineHistory-05.jpg',alt:'Collage 2000-2007 con carteles Plan for the Community',
+ credit:'',loc:'Wards Corner',tags:['Pueblito Paisa','Community Plan'],
+ title:{en:'The first community-led vision for Wards Corner',es:'Primera visión comunitaria para Wards Corner',pt:'Primeira visão comunitária para Wards Corner'},
+ text:{en:'For the first time, a community-led vision for Wards Corner was publicly presented. The Pueblito Paisa Action Plan and the first drawings of a Community Plan for Wards Corner were unveiled to an audience of around 120 people and received unanimous applause.',
+       es:'Por primera vez, se presentó públicamente una visión liderada por la comunidad para Wards Corner. El Plan de Acción Pueblito Paisa y los primeros dibujos de un Plan Comunitario para Wards Corner fueron presentados ante unas 120 personas y recibieron un aplauso unánime.',
+       pt:'Pela primeira vez, uma visão liderada pela comunidade para Wards Corner foi apresentada publicamente. O Plano de Ação Pueblito Paisa e os primeiros desenhos de um Plano Comunitário para Wards Corner foram apresentados a cerca de 120 pessoas e receberam aplausos unânimes.'}},
+{id:'w09',series:'wards',date_label:'2010',sort_date:'2010-01-01',cat:['politica'],accent:'#3350E2',
+ img:'OUTLINES_A2_TimeLineHistory-06.jpg',alt:'Collage 2010-2011: manifestantes Tottenham deserves better y portada de No Longer Invisible',
+ credit:'',loc:'Wards Corner',tags:['apelación','EHRC','victoria legal'],
+ title:{en:'Janet Harris wins the appeal to save the building',es:'Janet Harris gana la apelación para salvar el edificio',pt:'Janet Harris vence o recurso para salvar o edifício'},
+ text:{en:'Following plans to demolish Wards Corner, Janet Harris, co-founder of the Tottenham Civic Society, appealed the decision. Supported by the Equality and Human Rights Commission and represented by Bindsman Solicitors LLP, the appeal succeeded, marking a major victory in the campaign to save the building.',
+       es:'Tras los planes de demolición de Wards Corner, Janet Harris, cofundadora de la Tottenham Civic Society, apeló la decisión. Con el apoyo de la Comisión de Igualdad y Derechos Humanos del Reino Unido y representada por Bindsman Solicitors LLP, la apelación prosperó y marcó una importante victoria en la campaña para salvar el edificio.',
+       pt:'Após os planos de demolição de Wards Corner, Janet Harris, cofundadora da Tottenham Civic Society, recorreu da decisão. Com o apoio da Comissão de Igualdade e Direitos Humanos do Reino Unido e representada pela Bindsman Solicitors LLP, o recurso foi bem-sucedido, marcando uma importante vitória na campanha para salvar o edifício.'}},
+{id:'w10',series:'wards',date_label:'2011',sort_date:'2011-01-01',cat:['social'],accent:'#CDE2DE',featured:true,
+ img:'OUTLINES_A2_TimeLineHistory-06.jpg',alt:'Collage 2010-2011 con la portada del informe No Longer Invisible',
+ credit:'',loc:'Reino Unido',tags:['informe','demografía','McIlwaine'],
+ title:{en:'No Longer Invisible is published',es:'Se publica No Longer Invisible',pt:'É publicado o No Longer Invisible'},
+ text:{en:'No Longer Invisible is published, the first demographic report on Latin Americans in the UK.',
+       es:'Se publica No Longer Invisible, primer informe demográfico sobre los latinoamericanos en el Reino Unido.',
+       pt:'É publicado o No Longer Invisible, primeiro relatório demográfico sobre os latino-americanos no Reino Unido.'},
+ extra:'Professor McIlwaine brought to light the first report about the Latin American community in London: No Longer Invisible (NLI). The report evidenced the trajectories of Latin Americans to London, showing that most Latin Americans in the UK were coming for economic reasons (43%), education (22%), political reasons (concentrated among Chilean, Ecuadorian and Colombians) (6.3%), family and social reasons (15.7%) and other (12.4%). Most of them had passed through Spain as a \u2018gateway country\u2019 due to the language and migration policies for Latin Americans, and more than a quarter had Spanish nationality (26%).'},
+{id:'w11',series:'wards',date_label:'2012',sort_date:'2012-01-01',cat:['social','politica'],accent:'#6FD64B',
+ img:'OUTLINES_A2_TimeLineHistory-07.jpg',alt:'Lámina verde menta 2012-2014: mariachis, Latin Elephant y Elephant and Castle',
+ credit:'',loc:'Reino Unido',tags:['CLAUK','coalición'],
+ title:{en:'CLAUK is founded',es:'Se funda CLAUK',pt:'É fundada a CLAUK'},
+ text:{en:'The Coalition of Latin Americans in the UK (CLAUK) is founded.',
+       es:'La Coalición de Latinoamericanos en el Reino Unido (CLAUK) es fundada.',
+       pt:'Foi fundada a Coalizão de Latino-Americanos no Reino Unido (CLAUK).'}},
+{id:'w12',series:'wards',date_label:'2014',sort_date:'2014-01-01',cat:['politica','social'],accent:'#E8A81C',related:['w13'],
+ img:'OUTLINES_A2_TimeLineHistory-07.jpg',alt:'Lámina verde menta 2012-2014 con recorte Latin fever hits the streets of Southwark',
+ credit:'',loc:'Seven Sisters Market',tags:['Asset of Community Value','Community Plan'],
+ title:{en:'Seven Sisters Market, Asset of Community Value',es:'Seven Sisters Market, Asset of Community Value',pt:'Seven Sisters Market, Asset of Community Value'},
+ text:{en:'Seven Sisters Market is recognised as an Asset of Community Value, and the third Community Plan deepens the community design.',
+       es:'Seven Sisters Market es reconocido como Asset of Community Value, y la tercera versión del Community Plan profundiza el diseño comunitario.',
+       pt:'O Seven Sisters Market é reconhecido como Asset of Community Value, e a terceira versão do Community Plan aprofunda o desenho comunitário.'}},
+{id:'w13',series:'wards',date_label:'2014',sort_date:'2014-01-02',cat:['social'],accent:'#D9382B',related:['w12'],
+ img:'OUTLINES_A2_TimeLineHistory-07.jpg',alt:'Lámina verde menta 2012-2014 con el logo de Latin Elephant',
+ credit:'',loc:'Elephant & Castle',tags:['Latin Elephant','economías migrantes'],
+ title:{en:'Latin Elephant is founded',es:'Se funda Latin Elephant',pt:'É fundada a Latin Elephant'},
+ text:{en:'In south London, LATIN ELEPHANT is founded to defend migrant economies facing urban regeneration.',
+       es:'En el sur de Londres se funda LATIN ELEPHANT para defender las economías migrantes ante la regeneración urbana.',
+       pt:'No sul de Londres é fundada a LATIN ELEPHANT para defender as economias migrantes diante da regeneração urbana.'}},
+{id:'w14',series:'wards',date_label:'2016',sort_date:'2016-01-01',cat:['social','cultural'],accent:'#EE3FC8',
+ img:'OUTLINES_A2_TimeLineHistory-08.jpg',alt:'Collage 2016: portada de Towards Visibility, Wara y Uncovering the Invisible',
+ credit:'',loc:'Southwark',tags:['Latin Quarter','Towards Visibility','representación'],
+ title:{en:'Towards Visibility and London\u2019s Latin Quarter',es:'Towards Visibility y el Barrio Latino de Londres',pt:'Towards Visibility e o Bairro Latino de Londres'},
+ text:{en:'Towards Visibility is published and Southwark is recognised as London\u2019s Latin Quarter. The community comes together to create representation and hold on to a sense of belonging, through projects such as Leave to Remain, Mujer Diáspora / Diaspora Woman Collective, Portraits of Latin Americans in London at City Hall, London\u2019s Latin Quarter, and Being Latin in Elephant.',
+       es:'Se publica Towards Visibility y Southwark es reconocido como el Barrio Latino de Londres. La comunidad se une para crear representación y sostener el sentido de pertenencia, con proyectos como Leave to Remain, Mujer Diáspora / Diaspora Woman Collective, Portraits of Latin Americans in London en City Hall, London\u2019s Latin Quarter y Being Latin in Elephant.',
+       pt:'É publicado o Towards Visibility e Southwark é reconhecida como o Bairro Latino de Londres. A comunidade se une para criar representação e manter o sentimento de pertencimento, com projetos como Leave to Remain, Mujer Diáspora / Diaspora Woman Collective, Portraits of Latin Americans in London no City Hall, London\u2019s Latin Quarter e Being Latin in Elephant.'},
+ extra:'The report highlights that most Onwards Latin American Migrants (OLAs) were coming as EU citizens. The report addresses three key issues: the first one is reasons for moving from which it is possible to identify that almost 70% migrated to the UK because of economic reasons and chose London because of friends and family living in the city. 9 out of 10 OLA migrants live and work in the UK permanently.'},
+{id:'w15',series:'wards',date_label:'2016',sort_date:'2016-01-02',cat:['cultural','politica'],accent:'#3350E2',
+ img:'OUTLINES_A2_TimeLineHistory-09.jpg',alt:'Collage 2016: The Seven Sisters Indoor Market Film, aviso de EVICTION y fachadas del mercado',
+ credit:'Film by Klearjos Eduardo Papanicolaou and Marios Kleftakis',loc:'Seven Sisters Market',tags:['documental','CPO','campaña'],
+ title:{en:'The Seven Sisters Indoor Market film and the CPO',es:'El documental del mercado y la CPO',pt:'O documentário do mercado e a CPO'},
+ text:{en:'The documentary The Seven Sisters Indoor Market captures the market and the stories of its traders. In the same year, Haringey Council announced a Compulsory Purchase Order (CPO) for Wards Corner, triggering a major community movement to save the market.',
+       es:'El documental The Seven Sisters Indoor Market retrata el mercado y las historias de sus comerciantes. Ese mismo año, Haringey Council anunció una Orden de Compra Obligatoria (CPO) para Wards Corner, desencadenando un importante movimiento comunitario para salvar el mercado.',
+       pt:'O documentário The Seven Sisters Indoor Market retrata o mercado e as histórias dos seus comerciantes. Nesse mesmo ano, o Haringey Council anunciou uma Ordem de Compra Compulsória (CPO) para Wards Corner, desencadeando um importante movimento comunitário para salvar o mercado.'}},
+{id:'w16',series:'wards',date_label:'2018',sort_date:'2018-01-01',cat:['social','politica'],accent:'#E8A81C',related:['w17'],
+ img:'OUTLINES_A2_TimeLineHistory-10.jpg',alt:'Collage 2018: Royal Courts of Justice, banner Latin Village Fights Back y letras recortadas Seven Sisters',
+ credit:'',loc:'Wards Corner',tags:['Unit 38','Community Plan'],
+ title:{en:'Unit 38 publishes the Wards Corner Community Plan',es:'Unit 38 publica el Wards Corner Community Plan',pt:'A Unit 38 publica o Wards Corner Community Plan'},
+ text:{en:'Unit 38 (Architectural Cooperative) publishes the Wards Corner Community Plan as an alternative urban proposal.',
+       es:'Unit 38 (Cooperativa de Arquitectura) publica el Wards Corner Community Plan como propuesta urbana alternativa.',
+       pt:'A Unit 38 (Cooperativa de Arquitetura) publica o Wards Corner Community Plan como proposta urbana alternativa.'}},
+{id:'w17',series:'wards',date_label:'2018',sort_date:'2018-01-02',cat:['social','politica'],accent:'#D9382B',related:['w16'],
+ img:'OUTLINES_A2_TimeLineHistory-10.jpg',alt:'Collage 2018 con cartel I Support the Community Plan',
+ credit:'',loc:'Wards Corner',tags:['Save Latin Village','CIC','campaña'],url:'https://wardscornerplan.org',
+ urlLabel:{en:'Community Plan',es:'Community Plan',pt:'Community Plan'},
+ title:{en:'Save Latin Village & Wards Corner CIC is set up',es:'Se constituye Save Latin Village & Wards Corner CIC',pt:'É constituída a Save Latin Village & Wards Corner CIC'},
+ text:{en:'Save Latin Village & Wards Corner CIC is set up as a campaign organisation.',
+       es:'Se constituye Save Latin Village & Wards Corner CIC como organización de campaña.',
+       pt:'É constituída a Save Latin Village & Wards Corner CIC como organização de campanha.'}},
+{id:'w18',series:'wards',date_label:'2019',sort_date:'2019-01-01',cat:['politica'],accent:'#EE3FC8',related:['w19','w20'],
+ img:'OUTLINES_A2_TimeLineHistory-11.jpg',alt:'Collage 2019: marcha Latin Village Fights Back y titulares sobre la investigación de la ONU',
+ credit:'',loc:'Seven Sisters Market',tags:['CPO','SSMTA','apelación'],url:'https://savelatinvillage.org.uk',
+ urlLabel:{en:'Save Latin Village',es:'Save Latin Village',pt:'Save Latin Village'},
+ title:{en:'A new CPO and the community appeal',es:'Nueva CPO y apelación comunitaria',pt:'Nova CPO e recurso comunitário'},
+ text:{en:'The new CPO is approved. In response, the Seven Sisters Market Traders Association (SSMTA) launches a community appeal challenging the decision.',
+       es:'Se aprueba una nueva CPO. En respuesta, la Asociación de Comerciantes del Mercado de Seven Sisters (SSMTA) impulsa una apelación comunitaria para impugnar la decisión.',
+       pt:'Uma nova CPO é aprovada. Em resposta, a Associação de Comerciantes do Mercado de Seven Sisters (SSMTA) apresenta um recurso comunitário para contestar a decisão.'}},
+{id:'w19',series:'wards',date_label:'2019',sort_date:'2019-01-02',cat:['politica'],accent:'#3350E2',related:['w18','w20'],featured:true,
+ img:'OUTLINES_A2_TimeLineHistory-11.jpg',alt:'Collage 2019 con titular Plans to redevelop Seven Sisters market pose human rights threat, say UN experts',
+ credit:'',loc:'Seven Sisters Market',tags:['ONU','derechos humanos','gentrificación'],
+ title:{en:'UN experts warn on human rights',es:'La ONU advierte sobre derechos humanos',pt:'A ONU alerta sobre direitos humanos'},
+ text:{en:'UN (United Nations) experts warn that redeveloping Seven Sisters market threatens human rights.',
+       es:'Expertos de la ONU (Organización Naciones Unidas) advierten que la regeneración del mercado de Seven Sisters amenaza los derechos humanos.',
+       pt:'Especialistas da ONU (Organização das Nações Unidas) alertam que a reforma do mercado de Seven Sisters ameaça os direitos humanos.'}},
+{id:'w20',series:'wards',date_label:'2019',sort_date:'2019-01-03',cat:['politica'],accent:'#6FD64B',related:['w18','w19'],
+ img:'OUTLINES_A2_TimeLineHistory-11.jpg',alt:'Collage 2019 con cartel I Support the Community Plan',
+ credit:'',loc:'Wards Corner',tags:['Community Plan','planning permission'],
+ title:{en:'The fourth Community Plan gets planning permission',es:'La cuarta versión del Community Plan recibe permiso',pt:'A quarta versão do Community Plan recebe licença'},
+ text:{en:'The fourth Community Plan receives planning permission.',
+       es:'La cuarta versión del Community Plan recibe el permiso de planeamiento (planning permission).',
+       pt:'A quarta versão do Community Plan recebe a licença de planejamento (planning permission).'}},
+{id:'w21',series:'wards',date_label:'2020',sort_date:'2020-01-01',cat:['social'],accent:'#CDE2DE',
+ img:'OUTLINES_A2_TimeLineHistory-12.jpg',alt:'Collage 2020-2021: comerciantes con banner Latin Village Fights Back frente al edificio y un megáfono',
+ credit:'',loc:'Seven Sisters Market',tags:['COVID','comerciantes'],
+ title:{en:'The market closes during COVID',es:'El mercado cierra durante la COVID',pt:'O mercado fecha durante a COVID'},
+ text:{en:'The market closed during COVID, forcing many traders to leave, reinvent themselves, or lose their livelihoods. Only a few remained as stewards of the building.',
+       es:'El mercado cerró durante la COVID, lo que obligó a muchos comerciantes a marcharse, reinventarse o perder sus medios de vida. Solo unos pocos permanecieron como guardianes del edificio.',
+       pt:'O mercado fechou durante a COVID, forçando muitos comerciantes a sair, reinventar-se ou perder os seus meios de subsistência. Apenas alguns permaneceram como guardiões do edifício.'}},
+{id:'w22',series:'wards',date_label:'2021',sort_date:'2021-01-01',cat:['politica','social'],accent:'#EE3FC8',featured:true,
+ img:'OUTLINES_A2_TimeLineHistory-12.jpg',alt:'Collage 2020-2021 con la comunidad celebrando la retirada de Grainger',
+ credit:'',loc:'Wards Corner',tags:['victoria','Grainger','campaña'],url:'https://savelatinvillage.org.uk',
+ urlLabel:{en:'Save Latin Village',es:'Save Latin Village',pt:'Save Latin Village'},
+ title:{en:'The community campaign wins',es:'La campaña comunitaria gana',pt:'A campanha comunitária vence'},
+ text:{en:'The community campaign wins as Grainger withdraws from the regeneration project.',
+       es:'La campaña comunitaria logra que Grainger se retire del proyecto de regeneración, consiguiendo una victoria decisiva.',
+       pt:'A campanha comunitária consegue que a Grainger se retire do projeto de regeneração, garantindo uma vitória decisiva.'}},
+{id:'w23',series:'wards',date_label:'2022',sort_date:'2022-01-01',cat:['cultural'],accent:'#F5AFDD',related:['w24','w25','w26'],
+ img:'OUTLINES_A2_TimeLineHistory-13.jpg',alt:'Collage 2022: afiche de la exposición LATINAS, cartel de Élefan, balanza y puños en alto',
+ credit:'',loc:'Londres',tags:['LATINAS','LAWA','exposición'],
+ title:{en:'LATINAS, an exhibition with LAWA',es:'LATINAS, exposición con LAWA',pt:'LATINAS, exposição com LAWA'},
+ text:{en:'LATINAS, an exhibition by Louise Carpenedo with LAWA, is opened.',
+       es:'Se abre LATINAS, exposición de Louise Carpenedo con LAWA.',
+       pt:'LATINAS inaugura, uma exposição de Louise Carpenedo com LAWA.'}},
+{id:'w24',series:'wards',date_label:'2022',sort_date:'2022-01-02',cat:['cultural'],accent:'#3350E2',related:['w23','w25','w26'],
+ img:'OUTLINES_A2_TimeLineHistory-13.jpg',alt:'Collage 2022 con el cartel azul del documental Élefan',
+ credit:'',loc:'Elephant & Castle',tags:['Élefan','documental'],
+ title:{en:'Élefan, a documentary about Elephant and Castle',es:'Élefan, documental sobre Elephant and Castle',pt:'Élefan, documentário sobre Elephant and Castle'},
+ text:{en:'Élefan, a documentary about Elephant and Castle, is produced.',
+       es:'Se produce Élefan, documental sobre Elephant and Castle.',
+       pt:'É produzido o Élefan, documentário sobre Elephant and Castle.'}},
+{id:'w25',series:'wards',date_label:'2022',sort_date:'2022-01-03',cat:['social','politica'],accent:'#E8A81C',related:['w23','w24','w26'],
+ img:'OUTLINES_A2_TimeLineHistory-13.jpg',alt:'Collage 2022 con retratos de comerciantes y Espacio Latino',
+ credit:'',loc:'Wards Corner',tags:['CBS','gestión comunitaria'],
+ title:{en:'The Wards Corner Community Benefit Society registers',es:'Se registra la Wards Corner Community Benefit Society',pt:'É registrada a Wards Corner Community Benefit Society'},
+ text:{en:'The Wards Corner Community Benefit Society registers to take on community management.',
+       es:'Se registra la Wards Corner Community Benefit Society para impulsar la gestión comunitaria.',
+       pt:'É registrada a Wards Corner Community Benefit Society para assumir a gestão comunitária.'}},
+{id:'w26',series:'wards',date_label:'2022',sort_date:'2022-01-04',cat:['social'],accent:'#6FD64B',related:['w23','w24','w25'],
+ img:'OUTLINES_A2_TimeLineHistory-13.jpg',alt:'Collage 2022 con recorte Every race, colour, nation',
+ credit:'',loc:'Wards Corner',tags:['Best Community Campaign','premio'],
+ title:{en:'Best Community Campaign',es:'Best Community Campaign',pt:'Best Community Campaign'},
+ text:{en:'The Wards Corner Community Plan campaign is named Best Community Campaign.',
+       es:'La campaña Wards Corner Community Plan es reconocida como Best Community Campaign.',
+       pt:'A campanha Wards Corner Community Plan é reconhecida como Best Community Campaign.'}},
+{id:'w27',series:'wards',date_label:'2024',sort_date:'2024-01-01',cat:['social'],accent:'#EE3FC8',
+ img:'OUTLINES_A2_TimeLineHistory-14.jpg',alt:'Collage 2024-2025: dibujo infantil del Grand Opening del Seven Sisters Market y corte de cinta',
+ credit:'',loc:'Londres',tags:['población','censo','406%'],
+ title:{en:'London\u2019s Latin American population grows 406%',es:'La población latinoamericana crece un 406%',pt:'A população latino-americana cresce 406%'},
+ text:{en:'London\u2019s Latin American population grows by 406% between 2001 and 2021.',
+       es:'La población latinoamericana de Londres crece un 406% entre 2001 y 2021.',
+       pt:'A população latino-americana de Londres cresce 406% entre 2001 e 2021.'}},
+{id:'w28',series:'wards',date_label:'2025',sort_date:'2025-10-01',cat:['social','politica'],accent:'#E8A81C',featured:true,
+ img:'OUTLINES_A2_TimeLineHistory-14.jpg',alt:'Collage 2024-2025 con la reapertura del mercado temporal y Grupo de Juego',
+ credit:'',loc:'Seven Sisters Market',tags:['reapertura','CLAUK','categoría étnica'],
+ title:{en:'The temporary market reopens; Latin Americans recognised as an ethnic category',es:'Reabre el mercado temporal; reconocimiento como categoría étnica',pt:'O mercado temporário reabre; reconhecimento como categoria étnica'},
+ text:{en:'In October, the temporary market reopens, including a new community space. The same year, the CBS elects a new board, and Haringey officially recognises Latin Americans as an ethnic category after years of campaigning by CLAUK, joining Southwark (2012), Lambeth (2013), the GLA (2014), Islington (2015) and Hackney (2016).',
+       es:'En octubre, reabre el mercado temporal, incluyendo un nuevo espacio comunitario. Ese mismo año, la CBS elige una nueva junta directiva y Haringey reconoce oficialmente a los latinoamericanos como categoría étnica tras años de campaña de CLAUK, sumándose a Southwark (2012), Lambeth (2013), la GLA (2014), Islington (2015) y Hackney (2016).',
+       pt:'Em outubro, o mercado temporário reabre, incluindo um novo espaço comunitário. Nesse mesmo ano, a CBS elege uma nova direção e Haringey reconhece oficialmente os latino-americanos como categoria étnica após anos de campanha da CLAUK, juntando-se a Southwark (2012), Lambeth (2013), à GLA (2014), Islington (2015) e Hackney (2016).'}},
+{id:'w29',series:'wards',date_label:'2026',sort_date:'2026-01-01',cat:['social','cultural'],accent:'#3350E2',
+ img:'OUTLINES_A2_TimeLineHistory-15.jpg',alt:'Collage 2026: fachada del Seven Sisters Market, Feria de Emprendimiento y homenaje a Mirca Morera',
+ credit:'In loving memory of Mirca Morera (1977\u20132026)',loc:'Wards Corner',tags:['Espacio Comunitario','Market Tales','CBS'],
+ url:'https://wardscorner.org',urlLabel:{en:'Wards Corner CBS',es:'Wards Corner CBS',pt:'Wards Corner CBS'},
+ title:{en:'Wards Corner CBS runs the Community Space',es:'Wards Corner CBS gestiona el Espacio Comunitario',pt:'A Wards Corner CBS gere o Espaço Comunitário'},
+ text:{en:'Wards Corner CBS runs the Community Space, curates a public programme of diverse community events, keeps membership open to all, and continues to shape a community-led vision for the permanent market.',
+       es:'Wards Corner CBS gestiona el Espacio Comunitario, desarrolla una programación pública y diversa de eventos comunitarios, mantiene la membresía abierta a toda la comunidad y continúa construyendo una visión comunitaria para el mercado permanente.',
+       pt:'A Wards Corner CBS gere o Espaço Comunitário, desenvolve uma programação pública e diversificada de eventos comunitários, mantém a adesão aberta a todos e continua a construir uma visão comunitária para o mercado permanente.'}},
+{id:'w30',series:'wards',date_label:'2030',sort_date:'2030-01-01',cat:['social'],accent:'#EE3FC8',featured:true,
+ img:'OUTLINES_A2_TimeLineHistory-16.jpg',alt:'Lámina 2030 casi en blanco con hojas tropicales e hibiscos: una invitación a imaginar',
+ credit:'',loc:'Seven Sisters',tags:['futuro','participación','mercado permanente'],
+ url:'https://wardscorner.org/join',urlLabel:{en:'Share your vision',es:'Comparte tu visión',pt:'Compartilhe sua visão'},
+ title:{en:'2030: how do you imagine the new permanent market?',es:'2030: ¿cómo te imaginas el nuevo mercado permanente?',pt:'2030: como você imagina o novo mercado permanente?'},
+ text:{en:'How do you imagine the new permanent market? What would you like to see or do there?',
+       es:'¿Cómo te imaginas el nuevo mercado permanente? ¿Qué te gustaría ver o poder hacer allí?',
+       pt:'Como você imagina o novo mercado permanente? O que gostaria de ver ou poder fazer lá?'}}
+];
+
+/* ================= APP ================= */
+let state = {lang:'es', series:'all', cat:'all', dec:'all', q:'', view:'timeline'};
+let events = EVENTS.slice();
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const imgURL = f => {
+  f = String(f||'').trim();
+  const m = f.match(/^https?:\/\/github\.com\/([^\s]+?)\/blob\/([^\s]+)$/);
+  if(m) return 'https://raw.githubusercontent.com/'+m[1]+'/'+m[2];
+  return /^https?:\/\//.test(f) ? f : IMG_BASE + f;
+};
+const yearOf = e => parseInt(String(e.sort_date).slice(0,4),10) || 0;
+const decadeOf = e => Math.floor(yearOf(e)/10)*10;
+
+/* --- portadas --- */
+$('#coverMusImg').src = imgURL(COVER_MUS);
+$('#coverWcImg').src = imgURL(COVER_WC);
+[['#coverMus','music'],['#coverWc','wards']].forEach(([sel,s])=>{
+  const f = ()=>{ state.series = (state.series===s?'all':s); renderControls(); render();
+    $('.controls').scrollIntoView({behavior:'smooth'}); };
+  $(sel).addEventListener('click',f);
+  $(sel).addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();f();} });
+});
+document.querySelectorAll('.cover img').forEach(im=>{
+  im.onerror = ()=>{ im.style.display='none'; };
+});
+
+/* --- idioma --- */
+function setLang(l){
+  state.lang = l;
+  document.body.dataset.lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('.langbtn').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  $('#introText').textContent = STATIC.intro[l];
+  $('#openText').textContent = STATIC.open[l];
+  renderControls(); render();
+}
+document.querySelectorAll('.langbtn').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
+
+/* --- controles --- */
+function chip(label,on,cls,fn){
+  const b=document.createElement('button');
+  b.className='chip'+(on?' on':'')+(cls?' '+cls:'');
+  b.textContent=label; b.addEventListener('click',fn); return b;
+}
+function renderControls(){
+  const L=state.lang, ui=STATIC.ui;
+  const sr=$('#seriesRow'); sr.innerHTML='';
+  [['all',ui.series.all[L]],['music','\u266B '+ui.series.music[L]],['wards','\u2691 '+ui.series.wards[L]]]
+    .forEach(([v,lab])=>sr.appendChild(chip(lab,state.series===v,v==='wards'?'c-blu':'',()=>{state.series=v;renderControls();render();})));
+  const cr=$('#catRow'); cr.innerHTML='';
+  cr.appendChild(chip(ui.all[L],state.cat==='all','',()=>{state.cat='all';renderControls();render();}));
+  [['cultural','c-yel'],['social','c-grn'],['politica','c-blu']].forEach(([c,cls])=>
+    cr.appendChild(chip(ui.cats[c][L],state.cat===c,cls,()=>{state.cat=c;renderControls();render();})));
+  const decs=[...new Set(events.map(decadeOf))].sort((a,b)=>a-b);
+  const dr=$('#decRow'); dr.innerHTML='';
+  dr.appendChild(chip(ui.all[L],state.dec==='all','',()=>{state.dec='all';renderControls();render();}));
+  decs.forEach(d=>dr.appendChild(chip(d+'s',state.dec===d,'',()=>{state.dec=d;renderControls();render();})));
+}
+$('#q').addEventListener('input',e=>{state.q=e.target.value.toLowerCase();render();});
+$('#viewBtn').addEventListener('click',()=>{
+  state.view = state.view==='timeline'?'grid':'timeline';
+  $('#viewBtn').innerHTML = state.view==='timeline'?'&#9638; GRID':'&#9776; TIMELINE';
+  $('#viewBtn').setAttribute('aria-pressed', state.view==='grid');
+  render();
+});
+
+/* --- filtro --- */
+function filtered(){
+  return events.filter(e=>{
+    if(state.series!=='all' && e.series!==state.series) return false;
+    if(state.cat!=='all' && !(e.cat||[]).includes(state.cat)) return false;
+    if(state.dec!=='all' && decadeOf(e)!==state.dec) return false;
+    if(state.q){
+      const hay=[e.title.en,e.title.es,e.title.pt,e.text.en,e.text.es,e.text.pt,
+        (e.tags||[]).join(' '),e.loc||'',e.date_label].join(' ').toLowerCase();
+      if(!hay.includes(state.q)) return false;
+    }
+    return true;
+  }).sort((a,b)=> String(a.sort_date).localeCompare(String(b.sort_date)) || a.id.localeCompare(b.id));
+}
+
+/* --- render --- */
+function imgTag(e){
+  return '<div class="imgwrap"><img loading="lazy" src="'+esc(imgURL(e.img))+'" alt="'+esc(e.alt||e.title[state.lang])+'" '+
+    'onerror="this.outerHTML=\'<div class=&quot;ph&quot;>'+esc(e.date_label)+'</div>\'"></div>';
+}
+function catTags(e){
+  return (e.cat||[]).map(c=>'<span class="tag cat-'+c+'">'+esc(STATIC.ui.cats[c]?STATIC.ui.cats[c][state.lang]:c)+'</span>').join('')+
+         (e.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('');
+}
+function render(){
+  const L=state.lang, list=filtered();
+  $('#count').textContent = list.length+' '+STATIC.ui.results[L];
+  const tl=$('#tl'), gr=$('#grid');
+  tl.style.display = state.view==='timeline'?'':'none';
+  gr.style.display = state.view==='grid'?'grid':'none';
+  if(state.view==='timeline'){
+    tl.innerHTML = list.map(e=>
+      '<article class="item" style="--acc:'+esc(e.accent||'#EE3FC8')+'">'+
+      '<span class="year">'+esc(e.date_label)+'</span>'+
+      '<span class="badge '+(e.series==='music'?'mus':'')+'">'+(e.series==='music'?'\u266B MUSIC':'\u2691 WARDS CORNER')+'</span>'+
+      '<div class="card">'+(e.featured?'<span class="star" aria-hidden="true">\u2605</span>':'')+
+      imgTag(e)+
+      '<h3>'+esc(e.title[L])+'</h3>'+
+      '<p class="t-text">'+esc(e.text[L])+'</p>'+
+      '<div class="meta">'+catTags(e)+(e.loc?'<span class="tag">\u2691 '+esc(e.loc)+'</span>':'')+'</div>'+
+      (e.credit?'<p class="credit">'+esc(e.credit)+'</p>':'')+
+      '<button class="more" data-id="'+e.id+'">'+STATIC.ui.more[L]+' +</button>'+
+      (e.url?'<a class="linkbtn" href="'+esc(e.url)+'" target="_blank" rel="noopener">'+esc(e.urlLabel?e.urlLabel[L]:'Link')+' \u2197</a>':'')+
+      '</div></article>').join('');
+    tl.querySelectorAll('.more').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.id)));
+  } else {
+    gr.innerHTML = list.map(e=>
+      '<div class="gcard" data-id="'+e.id+'" tabindex="0" role="button" aria-label="'+esc(e.title[L])+'">'+
+      '<img loading="lazy" src="'+esc(imgURL(e.img))+'" alt="'+esc(e.alt||'')+'" onerror="this.outerHTML=\'<div class=&quot;ph&quot;>'+esc(e.date_label)+'</div>\'">'+
+      '<div class="gyear">'+esc(e.date_label)+'</div><div class="gtitle">'+esc(e.title[L])+'</div></div>').join('');
+    gr.querySelectorAll('.gcard').forEach(c=>{
+      const f=()=>openModal(c.dataset.id);
+      c.addEventListener('click',f);
+      c.addEventListener('keydown',e=>{if(e.key==='Enter'){f();}});
+    });
+  }
+}
+
+/* --- modal: reproduce la lámina trilingüe --- */
+function openModal(id){
+  const e=events.find(x=>x.id===id); if(!e) return;
+  const L=state.lang;
+  const rel=(e.related||[]).map(r=>events.find(x=>x.id===r)).filter(Boolean);
+  $('#mBody').innerHTML =
+    '<div class="m-year">'+esc(e.date_label)+'</div><div class="m-rule"></div>'+
+    imgTag(e)+
+    '<h3 class="m-title" id="mTitle">'+esc(e.title[L])+'</h3>'+
+    '<div class="m-cols">'+
+      '<p class="m-col en">'+esc(e.text.en)+'</p>'+
+      '<p class="m-col es">'+esc(e.text.es)+'</p>'+
+      '<p class="m-col pt">'+esc(e.text.pt)+'</p>'+
+    '</div>'+
+    (e.extra?'<div class="m-extra">'+esc(e.extra)+'</div>':'')+
+    '<div class="m-meta">'+catTags(e)+(e.loc?'<span class="tag">\u2691 '+esc(e.loc)+'</span>':'')+'</div>'+
+    (e.credit?'<p class="credit">'+esc(e.credit)+'</p>':'')+
+    (e.url?'<a class="linkbtn" href="'+esc(e.url)+'" target="_blank" rel="noopener">'+esc(e.urlLabel?e.urlLabel[L]:'Link')+' \u2197</a>':'')+
+    (rel.length?'<p class="credit" style="margin-top:10px">\u21C4 '+rel.map(r=>'<a href="#" data-rel="'+r.id+'">'+esc(r.date_label)+' \u00B7 '+esc(r.title[L])+'</a>').join(' &nbsp;|&nbsp; ')+'</p>':'');
+  $('#mBody').querySelectorAll('[data-rel]').forEach(a=>a.addEventListener('click',ev=>{ev.preventDefault();openModal(a.dataset.rel);}));
+  $('#modal').classList.add('open');
+  $('#mClose').focus();
+}
+$('#mClose').addEventListener('click',()=>$('#modal').classList.remove('open'));
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')$('#modal').classList.remove('open');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#modal').classList.remove('open');$('#adminModal').classList.remove('open');}});
+
+/* ================= ADMIN (Excel) ================= */
+const COLS=['id','series','date_label','sort_date','category','title_en','title_es','title_pt',
+  'text_en','text_es','text_pt','long_extra','image','image_alt','image_credit','location','tags',
+  'external_url','external_label_en','external_label_es','external_label_pt','featured','related_ids','accent'];
+const REQ=['id','series','date_label','sort_date','category','title_en','title_es','title_pt','text_en','text_es','text_pt','image'];
+let pending=null;
+
+$('#adminBtn').addEventListener('click',()=>$('#adminModal').classList.add('open'));
+$('#aClose').addEventListener('click',()=>$('#adminModal').classList.remove('open'));
+$('#adminModal').addEventListener('click',e=>{if(e.target.id==='adminModal')$('#adminModal').classList.remove('open');});
+
+function flatten(e){
+  return {id:e.id,series:e.series,date_label:e.date_label,sort_date:e.sort_date,
+    category:(e.cat||[]).join(', '),title_en:e.title.en,title_es:e.title.es,title_pt:e.title.pt,
+    text_en:e.text.en,text_es:e.text.es,text_pt:e.text.pt,long_extra:e.extra||'',
+    image:e.img,image_alt:e.alt||'',image_credit:e.credit||'',location:e.loc||'',
+    tags:(e.tags||[]).join(', '),external_url:e.url||'',
+    external_label_en:e.urlLabel?e.urlLabel.en:'',external_label_es:e.urlLabel?e.urlLabel.es:'',
+    external_label_pt:e.urlLabel?e.urlLabel.pt:'',
+    featured:e.featured?'yes':'',related_ids:(e.related||[]).join(', '),accent:e.accent||''};
+}
+function unflatten(r){
+  const norm=c=>{c=String(c).trim().toLowerCase();
+    if(c==='política'||c==='political'||c==='politica')return 'politica';
+    return c;};
+  const cats=String(r.category||'').split(',').map(norm).filter(Boolean);
+  const ev={id:String(r.id).trim(),series:String(r.series).trim().toLowerCase(),
+    date_label:String(r.date_label).trim(),sort_date:String(r.sort_date).trim().slice(0,10),
+    cat:cats,img:String(r.image).trim(),
+    title:{en:String(r.title_en),es:String(r.title_es),pt:String(r.title_pt)},
+    text:{en:String(r.text_en),es:String(r.text_es),pt:String(r.text_pt)}};
+  if(r.long_extra) ev.extra=String(r.long_extra);
+  if(r.image_alt) ev.alt=String(r.image_alt);
+  if(r.image_credit) ev.credit=String(r.image_credit);
+  if(r.location) ev.loc=String(r.location);
+  if(r.tags) ev.tags=String(r.tags).split(',').map(s=>s.trim()).filter(Boolean);
+  if(r.external_url) ev.url=String(r.external_url).trim();
+  if(r.external_label_en||r.external_label_es||r.external_label_pt)
+    ev.urlLabel={en:String(r.external_label_en||''),es:String(r.external_label_es||''),pt:String(r.external_label_pt||'')};
+  if(String(r.featured||'').trim()) ev.featured=true;
+  if(r.related_ids) ev.related=String(r.related_ids).split(',').map(s=>s.trim()).filter(Boolean);
+  if(r.accent) ev.accent=String(r.accent).trim();
+  return ev;
+}
+$('#tplBtn').addEventListener('click',()=>{
+  const ws=XLSX.utils.json_to_sheet(events.map(flatten),{header:COLS});
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'events');
+  XLSX.writeFile(wb,'latin_london_events.xlsx');
+});
+$('#jsonBtn').addEventListener('click',()=>{
+  const blob=new Blob([JSON.stringify(events,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='events.json';a.click();
+  URL.revokeObjectURL(a.href);
+});
+$('#xls').addEventListener('change',async ev=>{
+  const f=ev.target.files[0]; if(!f) return;
+  const out=$('#aResult'); out.innerHTML=''; $('#applyBtn').style.display='none'; pending=null;
+  try{
+    const wb=XLSX.read(await f.arrayBuffer(),{type:'array'});
+    const ws=wb.Sheets[wb.SheetNames[0]];
+    const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+    if(!rows.length) throw new Error('El archivo no tiene filas de datos.');
+    const headers=Object.keys(rows[0]);
+    const missing=REQ.filter(c=>!headers.includes(c));
+    const errs=[];
+    if(missing.length) errs.push('Faltan columnas obligatorias: '+missing.join(', '));
+    const ids=new Set();
+    rows.forEach((r,i)=>{
+      const n=i+2;
+      REQ.forEach(c=>{if(headers.includes(c) && String(r[c]).trim()==='') errs.push('Fila '+n+': falta el campo obligatorio "'+c+'"');});
+      if(String(r.series).trim() && !['music','wards'].includes(String(r.series).trim().toLowerCase()))
+        errs.push('Fila '+n+': series debe ser "music" o "wards" (recibido: "'+r.series+'")');
+      const sd=String(r.sort_date).trim();
+      if(sd && !/^\d{4}(-\d{2}(-\d{2})?)?/.test(sd)) errs.push('Fila '+n+': sort_date debe ser AAAA o AAAA-MM-DD (recibido: "'+sd+'")');
+      const id=String(r.id).trim();
+      if(id){ if(ids.has(id)) errs.push('Fila '+n+': id duplicado "'+id+'"'); ids.add(id); }
+    });
+    if(errs.length){
+      out.innerHTML='<div class="errbox">\u2717 '+esc(errs.length)+' error(es). Corrige el Excel y vuelve a cargarlo:\n\n'+errs.map(esc).join('\n')+'</div>';
+      return;
+    }
+    pending=rows.map(unflatten);
+    const cols=['id','series','date_label','category','title_es'];
+    out.innerHTML='<div class="okbox">\u2713 Archivo v\u00e1lido: '+rows.length+' eventos listos. Previsualizaci\u00f3n:</div>'+
+      '<div class="prevwrap"><table class="prev"><tr>'+cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
+      rows.slice(0,8).map(r=>'<tr>'+cols.map(c=>'<td>'+esc(String(r[c]).slice(0,60))+'</td>').join('')+'</tr>').join('')+
+      '</table></div>'+(rows.length>8?'<p>&hellip; y '+(rows.length-8)+' m\u00e1s.</p>':'');
+    $('#applyBtn').style.display='inline-block';
+  }catch(err){
+    out.innerHTML='<div class="errbox">\u2717 No se pudo leer el archivo: '+esc(err.message)+'</div>';
+  }
+  ev.target.value='';
+});
+$('#applyBtn').addEventListener('click',()=>{
+  if(!pending) return;
+  events=pending; pending=null;
+  $('#aResult').innerHTML='<div class="okbox">\u2713 L\u00ednea de tiempo actualizada con '+events.length+' eventos (v\u00e1lido durante esta sesi\u00f3n; exporta el JSON para hacerlo permanente).</div>';
+  $('#applyBtn').style.display='none';
+  renderControls(); render();
+});
+
+/* --- init --- */
+setLang('es');
+</script>
+</body>
+</html>
